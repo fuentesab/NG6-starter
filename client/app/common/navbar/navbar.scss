@@ -1,21 +1,21 @@
 @import '../common';
 
 .navbar {
-  height: 6.5rem;
-  background-color: $primaryColor;
-  padding: 1rem;
 
-  .logo {
-    display: inline-block;
+  li {
+    border-right: 1px #464646 solid;
   }
 
-  .logo {
-    color: $lightTextColor;
-    margin-right: 50%;
+  li:last-child {
+    border-right: none;
   }
 
-  .nav-links span {
-    color: $lightTextColor;
-    font-size: 1.6rem;
+  a:hover {
+    color: black;
+  }
+
+  a.active {
+    background-color: #4CAF50;
+    color: white;
   }
 }
