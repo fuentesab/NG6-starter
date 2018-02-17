@@ -5,7 +5,8 @@
 .agents-header {
   height: 250px;
   background-color: #031812;
-  //background-image: url('../../resources/agents_header.png');
+  background: url('../../../assets/agents_header.png') no-repeat center center fixed;
+  background-size: cover;
 }
 
 .search-form {
