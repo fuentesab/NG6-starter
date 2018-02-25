@@ -1,0 +1,20 @@
+.search-header {
+  height: 250px;
+  background-color: #031812;
+  background: url('../../../assets/search_header.png') no-repeat center center fixed;
+  background-size: cover;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px 10px;
+}
+
+.search-button {
+  width: 100px;
+  padding: 10px 10px;
+}

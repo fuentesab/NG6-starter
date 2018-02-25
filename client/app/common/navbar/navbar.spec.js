@@ -21,11 +21,11 @@ describe('Navbar', () => {
     // controller specs
     let controller;
     beforeEach(() => {
-      controller = $componentController('navbar', {
+      controller = ('navbar', {
         $scope: $rootScope.$new()
       });
     });
-
+    $componentController
     it('has a name property', () => { // erase if removing this.name from the controller
       expect(controller).to.have.property('name');
     });

@@ -1,0 +1,19 @@
+<div class="agents-results">
+  <div class="agents-body">
+    <div ng-repeat="agent in $ctrl.searchResults">
+      <div class="agents-item">
+        <img src="{{agent.ImageUrl}}" alt="{{agent.Name}} photo"/>
+        <div>
+          <strong>{{agent.Name}}</strong><br/>
+          <small>{{agent.SecondaryName}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="$ctrl.isSearching" class="results-loading-icon">
+  </div>
+  <div ng-if="!$ctrl.isSearching" class="agents-alerts">
+    <div ng-if="$ctrl.searchFailed" class="alert alert-error" ><span><strong>Error!</strong> Something went wrong while trying to search. Please try again</span></div>
+    <div ng-if="$ctrl.searchResults && $ctrl.searchResults.length == 0" class="alert alert-info"><span>No results found</span></div>
+  </div>
+</div>

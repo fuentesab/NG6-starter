@@ -1,45 +1,5 @@
-<div class="row agents-header">
-  <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 search-form">
-      <form class="form-horizontal">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search" ng-model="$ctrl.agentName">
-          <span class="input-group-btn">
-            <button type="submit" class="btn btn-default" ng-click=$ctrl.search()>Search</button>
-          </span>
-        </div>
-      </form>
-  </div>
-</div>
-<div class="agents-body">
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="agent in $ctrl.agents">
-      <div class="agents-item">
-        <img src="{{agent.ImageUrl}}" alt="{{agent.Name}} photo"/>
-        <div>
-          <strong>{{agent.Name}}</strong><br/>
-          <small>{{agent.SecondaryName}}</small>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<search-section is-searching="$ctrl.isSearching" search-failed="$ctrl.searchFailed"
+  search-results="$ctrl.searchResults" search-type="$ctrl.searchType"></search-section>
 
-
-
-
-<!--<section class="agents-header">-->
-  <!--<div align="center">-->
-    <!--<form class="search-form">-->
-      <!--<input style="width: 15%; height: 30px" type="text" id="search-agents" name="buid" ng-model="$ctrl.agentName"/>-->
-      <!--<button style="width: 5%; height: 35px" id="search-agents-button" type="button" ng-click=$ctrl.search()>Search</button>-->
-    <!--</form>-->
-  <!--</div>-->
-<!--</section>-->
-
-<!--<section class="agents-body">-->
-  <!--<div ng-repeat="agent in $ctrl.agents">-->
-    <!--<span>{{agent.Name}}</span>-->
-    <!--<span>{{agent.SecondaryName}}</span>-->
-  <!--</div>-->
-<!--</section>-->
-
+<agents-results-section is-searching="$ctrl.isSearching" search-failed="$ctrl.searchFailed"
+                 search-results="$ctrl.searchResults"></agents-results-section>

@@ -1,19 +1,11 @@
 class AgentsController {
-  constructor(SearchService) {
+
+  constructor() {
     this.name = 'agents';
-    this.service = SearchService
-  }
+    this.isSearching = false;
+    this.searchFailed = false;
+    this.searchType = 'agents';
 
-  search() {
-    console.log('TEST');
-    console.log(this.agentName);
-    this.service.searchForAgents(this.agentName).then((response)=>  {
-
-      if (response.data && response.data.Results) {
-
-        this.agents = response.data.Results;
-      }
-    });
   }
 }
 

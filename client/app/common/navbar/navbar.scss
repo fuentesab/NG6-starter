@@ -2,17 +2,32 @@
 
 .navbar {
 
-  margin-bottom: 0px;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #dddddd;
+  }
 
   li {
-    border-right: 1px #afafaf solid;
+    float: left;
+    display: list-item;
+    border-right: 1px #c4c4c4 solid;
+    margin: 5px;
+  }
+
+  li a {
+    display: block;
+    padding: 10px 50px;
+    text-decoration: none;
   }
 
   li:last-child {
     border-right: none;
   }
 
-  a:hover {
+  a:hover, a:visited {
     color: black;
   }
 
