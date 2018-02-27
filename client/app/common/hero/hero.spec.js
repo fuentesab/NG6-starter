@@ -26,7 +26,7 @@ describe('Hero', () => {
     });
   });
 
-  describe('Template', () => {
+  describe('View', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {

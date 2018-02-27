@@ -1,14 +1,16 @@
 import SearchModule from './search';
 import SearchController from './search.controller'
-import SearchService from './search.factory'
+import SearchComponent from './search.component'
+import SearchTemplate from './search.html'
 
 describe('Search', () => {
-  let $q, $rootScope, makeController, mockSearchService;
+  let  $q, $rootScope, $compile, makeController, mockSearchService;
 
   beforeEach(window.module(SearchModule));
-  beforeEach(inject((_$rootScope_, _$q_) => {
+  beforeEach(inject((_$rootScope_, _$q_, _$compile_) => {
     $rootScope = _$rootScope_;
     $q = _$q_;
+    $compile = _$compile_;
 
     makeController = () => {
       return new SearchController(mockSearchService);
@@ -17,78 +19,90 @@ describe('Search', () => {
 
   describe('Controller', () => {
 
-    it('define controller properties', () => { // erase if removing this.name from the controller
+    it('define controller properties', () => {
+      mockSearchService =  { searchForAgents: sinon.stub().returns($q.resolve({}))};
       let controller = makeController();
       controller.$onInit();
 
+      expect(controller).to.have.property('searchService');
       expect(controller).to.have.property('isSearching');
       expect(controller).to.have.property('searchFailed');
-      expect(controller).to.have.property('searchResults');
-
     });
 
-    it('successful search', () => {
+    it('WILL search for agents and returns a resolved promise',  () => {
+
+      mockSearchService =  {
+        searchForAgents: sinon.stub().returns($q.resolve({
+          data: {
+            Results: [{foo: 'bar1'}, {foo: 'bar2'}]
+          }
+        }))
+      };
+
       let controller = makeController();
       controller.$onInit();
-
       controller.searchType = 'agents';
       controller.searchKey = 'test';
-      mockSearchService = sinon.stub(SearchService, 'searchForAgents');
-      mockSearchService.withArgs('test').returns($q.resolve({
-        data: {
-          Results: [{foo: 'bar1'}, {foo: 'bar2'}]
-        }
-      }));
 
-      $rootScope.$digest();
       controller.search();
+
+      expect(controller.isSearching).to.be.true;
+      $rootScope.$digest();
       expect(controller.searchResults).to.deep.equal([{foo: 'bar1'}, {foo: 'bar2'}]);
       expect(controller.searchFailed).to.be.false;
       expect(controller.isSearching).to.be.false;
-
-      mockSearchService.restore();
     });
 
-    it('failed search', (done) => {
+    it('WILL search for agents and returns a rejected promise',  () => {
+
+      mockSearchService =  {
+        searchForAgents: sinon.stub().returns($q.reject({
+          data: {
+            Results: [{foo: 'bar1'}, {foo: 'bar2'}]
+          }
+        }))
+      };
+
       let controller = makeController();
       controller.$onInit();
       controller.searchType = 'agents';
+      controller.searchKey = 'test';
 
+      controller.search();
 
-
-      mockSearchService.searchForAgents.and.returnValue($q.reject({}));
-
-      controller.search().catch(() => {
-        expect(controller.isSearching).to.be.true;
-        expect(controller.searchFailed).to.be.true;
-        done();
-      });
-
+      expect(controller.isSearching).to.be.true;
       $rootScope.$digest();
-      expect(controller.searchResults).to.have.length(0);
+      expect(controller.searchResults).to.deep.empty;
+      expect(controller.searchFailed).to.be.true;
       expect(controller.isSearching).to.be.false;
+    });
+
+  });
+
+  describe('View', () => {
+    let scope, template;
+
+    beforeEach(() => {
+      scope = $rootScope.$new();
+      template = $compile('<search-section></search-section>')(scope);
+      scope.$apply();
+    });
+
+    it('has search text field in template', () => {
+       expect(template.find('input')).to.equal(/{{\s?\$ctrl\.name\s?}}/g);
     });
   });
 
-  // describe('Template', () => {
-  //   // template specs
-  //   // tip: use regex to ensure correct bindings are used e.g., {{  }}
-  //   it('has name in template [REMOVE]', () => {
-  //     expect(ResultsTemplate).to.match(/{{\s?\$ctrl\.name\s?}}/g);
-  //   });
-  // });
-  //
-  // describe('Component', () => {
-  //   // component/directive specs
-  //   let component = ResultsComponent;
-  //
-  //   it('includes the intended template', () => {
-  //     expect(component.template).to.equal(ResultsTemplate);
-  //   });
-  //
-  //   it('invokes the right controller', () => {
-  //     expect(component.controller).to.equal(ResultsController);
-  //   });
-  // });
+  describe('Component', () => {
+    let component = SearchComponent;
+
+    it('includes the intended template', () => {
+      expect(component.template).to.equal(SearchTemplate);
+    });
+
+    it('invokes the right controller', () => {
+      expect(component.controller).to.deep.equal(['SearchService', SearchController]);
+    });
+  });
 
 });

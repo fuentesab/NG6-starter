@@ -4,38 +4,35 @@ import ResultsComponent from './agentsResults.component';
 import ResultsTemplate from './agentsResults.html';
 
 describe('Results', () => {
-  let $rootScope, makeController;
+  let $rootScope, makeController, $compile;
 
   beforeEach(window.module(ResultsModule));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(inject((_$rootScope_, _$compile_) => {
     $rootScope = _$rootScope_;
+    $compile = _$compile_;
+
     makeController = () => {
       return new ResultsController();
     };
   }));
 
-  describe('Module', () => {
-    // top-level specs: i.e., routes, injection, naming
-  });
+  describe('View', () => {
+    let scope, template;
 
-  describe('Controller', () => {
-    // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
-      let controller = makeController();
-      expect(controller).to.have.property('name');
+    beforeEach(() => {
+      scope = $rootScope.$new();
+      template = $compile('<agents-results-section></agents-results-section>')(scope);
+      scope.$apply();
     });
-  });
 
-  describe('Template', () => {
-    // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(ResultsTemplate).to.match(/{{\s?\$ctrl\.name\s?}}/g);
+    it('loops through searchResults in template', () => {
+      expect(template).to.equal(ResultsTemplate);
+      // expect(template.find('div').html()).to.equal('Found in home.html');
     });
+
   });
 
   describe('Component', () => {
-    // component/directive specs
     let component = ResultsComponent;
 
     it('includes the intended template', () => {
