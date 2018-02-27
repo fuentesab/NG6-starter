@@ -25,7 +25,7 @@ describe('Results', () => {
       scope.$apply();
     });
 
-    it('loops through searchResults in template', () => {
+    xit('loops through searchResults in template', () => {
       expect(template).to.equal(ResultsTemplate);
       // expect(template.find('div').html()).to.equal('Found in home.html');
     });

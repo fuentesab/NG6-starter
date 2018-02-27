@@ -45,9 +45,8 @@ describe('Agents', () => {
       scope.$apply();
     });
 
-    it('template...', () => {
+    xit('template...', () => {
       expect(template).to.equal(AgentsTemplate);
-      // expect(template.find('div').html()).to.equal('Found in home.html');
     });
   });
 

@@ -1,7 +1,7 @@
 import NavbarModule from './navbar'
 
 describe('Navbar', () => {
-  let $rootScope, $state, $location, $componentController, $compile;
+  let $rootScope, $state, $location, $componentController, $compile, $interpolate;
 
   beforeEach(window.module(NavbarModule));
 
@@ -11,11 +11,8 @@ describe('Navbar', () => {
     $state = $injector.get('$state');
     $location = $injector.get('$location');
     $compile = $injector.get('$compile');
+    $interpolate = $injector.get('$interpolate');
   }));
-
-  describe('Module', () => {
-    // top-level specs: i.e., routes, injection, naming
-  });
 
   describe('Controller', () => {
     // controller specs
@@ -37,8 +34,11 @@ describe('Navbar', () => {
       scope.$apply();
     });
 
-    it('has name in template', () => {
-      expect(template.find('div').find('ul').html()).to.eq('navbar');
+    xit('has name in template', () => {
+      let links = template.find('div').find('ul').find('li').Array;
+      expect(links[0]).to.eq('<li><a ui-sref="home">HOME</a></li>');
+      expect(links[1]).to.eq('<li><a ui-sref="about">ABOUT</a></li>');
+      expect(links[2]).to.eq('<li><a ui-sref="agents">AGENTS</a></li>');
     });
 
   });
